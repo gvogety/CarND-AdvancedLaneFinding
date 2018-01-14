@@ -21,7 +21,7 @@ The goals / steps of this project are the following:
 [image4]: ./output_images/thresholds.jpg "Applied Thresholds"
 [image5]: ./output_images/PerspectiveTransform.png "Perspective Example"
 [image6]: ./output_images/LanesPathOverlaid.png "Lanes and Path Overlaid"
-[image7]: ./utout_images/ROC.png "Radium Of Curvature"
+[image7]: ./outout_images/ROC.png "Radium Of Curvature"
 [image8]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
 
