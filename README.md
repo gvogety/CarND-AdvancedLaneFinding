@@ -15,10 +15,10 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./output_files/CameraCalibration.png "Camera Calibration"
-[image2]: ./output_files/UndistortTest.png "Camera Calibration"
-[image3]: ./output_files/ExploreThresholds.png "Threshold Exploration"
-[image4]: ./output_files/thresholds.jpg "Binary Example"
+[image1]: ./output_images/CameraCalibration.png "Camera Calibration"
+[image2]: ./output_images/UndistortTest.png "Camera Calibration"
+[image3]: ./output_images/ExploreThresholds.png "Threshold Exploration"
+[image4]: ./output_images/thresholds.jpg "Binary Example"
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
 [image6]: ./examples/example_output.jpg "Output"
