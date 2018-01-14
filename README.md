@@ -18,10 +18,11 @@ The goals / steps of this project are the following:
 [image1]: ./output_images/CameraCalibration.png "Camera Calibration"
 [image2]: ./output_images/UndistortTest.png "Camera Calibration"
 [image3]: ./output_images/ExploreThresholds.png "Threshold Exploration"
-[image4]: ./output_images/thresholds.jpg "Binary Example"
-[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
-[image6]: ./examples/example_output.jpg "Output"
+[image4]: ./output_images/thresholds.jpg "Applied Thresholds"
+[image5]: ./output_images/PerspectiveTransform.png "Perspective Example"
+[image6]: ./outout_images/LanesPathOverlaid.png "Lanes and Path Overlaid"
+[image7]: ./utout_images/ROC.png "Radium Of Curvature"
+[image8]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
@@ -61,7 +62,7 @@ Here is the undistorted test image after camera is calibrated with the chessboar
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
-In the "Thresholds" section of the accompanying IPython notebook, starting around code cell#5, various threshold utility functions are defined. I created various visualtization python functions to select optimal thresholds. Using 'interact' facility from 'ipywidgets', I explored various color tranforms, gradients with appropriate thresholds.
+In the `Thresholds` section of the accompanying IPython notebook, starting around code cell#5, various threshold utility functions are defined. I created various visualtization python functions to select optimal thresholds. Using `interact` facility from `ipywidgets`, I explored various color tranforms, gradients with appropriate thresholds.
 
  Here's an example of my output for one of the exploration steps. 
 
@@ -75,39 +76,41 @@ Here is an example of an image with all various gradients and thresholds explore
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
-The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
+The code for my perspective transform includes couple of function called `calculate_perspective_matrices()` and `perspective_transform()`, which appears in *Perspective Transform* section of the iPython Notebook.  The first function calculates the transform matrices using following coordinates.  The `perspective_transform` function takes as inputs an image (`img`), and used the matrices calculated from the previous function to give transformed images.
 
 ```python
-src = np.float32(
-    [[(img_size[0] / 2) - 55, img_size[1] / 2 + 100],
-    [((img_size[0] / 6) - 10), img_size[1]],
-    [(img_size[0] * 5 / 6) + 60, img_size[1]],
-    [(img_size[0] / 2 + 55), img_size[1] / 2 + 100]])
-dst = np.float32(
-    [[(img_size[0] / 4), 0],
-    [(img_size[0] / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), 0]])
+	src = np.float32([[580,460],[710,460],[150,720], [1150,720]])    
+    dst = np.float32([[450,0],[1280-450,0],[450,720],[1280-450,720]])
 ```
 
 This resulted in the following source and destination points:
 
 | Source        | Destination   | 
 |:-------------:|:-------------:| 
-| 585, 460      | 320, 0        | 
-| 203, 720      | 320, 720      |
-| 1127, 720     | 960, 720      |
-| 695, 460      | 960, 0        |
+| 580, 460      | 450, 0        | 
+| 710, 460      | 830, 0      |
+| 150, 720     | 450, 720      |
+| 1150, 720      | 830,720        |
 
-I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
+I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image. Following is such an example.
 
-![alt text][image4]
+![alt text][image5]
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
+*Lane Finding* section of the accompnying IPython notebook has the various functions to find lanes. 
 
-![alt text][image5]
+After the gradients and thresholding functions have found a perspective transfomed image, Histogram of the pixels is used to find the lanes. Location of the largest pixel density is used as the potential lane locations. 
+
+The images is divided into a series of windows along the y-asis and the windows are analyzed along the lane locations found above. These windows have a margin around the lane location. As each side of the picture is scanned for lanes, potential pixels that form the lanes are collected together.
+
+Left and Right lane polynomials are found by using `np.polyfit`. These polynomials are used to find the precise lane on the left and right sides respectively.
+
+Using the lanes found using the polynomials, the lanes are drawn on the image and reverse persepctive transform is done on the resulting pixel locations to project a path onto the original image.
+
+Following image shows the resulting image with a test image.
+
+![alt text][image6]
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
