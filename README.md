@@ -112,9 +112,15 @@ Following image shows the resulting image with a test image.
 
 ![alt text][image6]
 
+`Note:` I did not try to optimize lane detection by using lane locations from the previous frames and reset to recalculating the lanes after sanity checks failed. This is an area of optimizations I intend to implement during second term. (I lost 2 months in Term1 due to life, :-| )
+
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-I did this in lines # through # in my code in `my_other_file.py`
+Radius of Curvature is calculated in the python function `radius_of_curvature_and_center_distance()` using the approach from the lesson. pixel to meter conversion is adjusted based on the lane widths that I observed in various perspective transforms of the test images. These can be a a little bit off from the ideal ones.
+
+Here is an image of the radius of curvature on one of the test images.
+
+![alt text][image7]
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
