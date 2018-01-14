@@ -124,9 +124,9 @@ Here is an image of the radius of curvature on one of the test images.
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
+This is implemented in the python function `project_path()`. Inverse matrix from the `calculate_perspective_matrices()` function is used to project the lanes/polygons found on perpective transformed image on to the original image. Here is one such example.
 
-![alt text][image6]
+![alt text][image8]
 
 ---
 
