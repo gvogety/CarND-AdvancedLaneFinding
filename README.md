@@ -41,7 +41,7 @@ You're also reading it!
 
 #### 1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
 
-The code for this step is contained in the second code cell of the IPython notebook located in "./CarND-AdvancedLaneFinding.ipynb". 
+Code for this step is contained in the second code cell of the IPython notebook located in "./CarND-AdvancedLaneFinding.ipynb". 
 
 I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Assuming chessboard is fixed in (x,y) plane, objpoints are the same for each image.  Depending on the size of the chessboard, all corners may not be detected successfully. Whenever corners are detected, objpoints is updated with objp and "imagepoints" is updated with (x,y) pixel position of each corner detected.  
 
@@ -62,7 +62,7 @@ Here is the undistorted test image after camera is calibrated with the chessboar
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
-In the `Thresholds` section of the accompanying IPython notebook, starting around code cell#5, various threshold utility functions are defined. I created various visualtization python functions to select optimal thresholds. Using `interact` facility from `ipywidgets`, I explored various color tranforms, gradients with appropriate thresholds.
+In the `Thresholds` section of the accompanying IPython notebook, starting around code cell#5, various threshold utility functions are defined. I created various visualization python functions to select optimal thresholds. Using `interact` facility from `ipywidgets`, I explored various color tranforms, gradients with appropriate thresholds.
 
  Here's an example of my output for one of the exploration steps. 
 
@@ -76,11 +76,11 @@ Here is an example of an image with all various gradients and thresholds explore
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
-The code for my perspective transform includes couple of function called `calculate_perspective_matrices()` and `perspective_transform()`, which appears in *Perspective Transform* section of the iPython Notebook.  The first function calculates the transform matrices using following coordinates.  The `perspective_transform` function takes as inputs an image (`img`), and used the matrices calculated from the previous function to give transformed images.
+Code for my perspective transform includes couple of functions called `calculate_perspective_matrices()` and `perspective_transform()`, which appears in *Perspective Transform* section of the iPython Notebook.  The first function calculates the transform matrices using following coordinates.  The `perspective_transform` function takes as inputs an image (`img`), and uses the matrices calculated from the previous function to give transformed images.
 
 ```python
 	src = np.float32([[580,460],[710,460],[150,720], [1150,720]])    
-    dst = np.float32([[450,0],[1280-450,0],[450,720],[1280-450,720]])
+	dst = np.float32([[450,0],[1280-450,0],[450,720],[1280-450,720]])
 ```
 
 This resulted in the following source and destination points:
@@ -104,9 +104,9 @@ After the gradients and thresholding functions have found a perspective transfom
 
 The images is divided into a series of windows along the y-asis and the windows are analyzed along the lane locations found above. These windows have a margin around the lane location. As each side of the picture is scanned for lanes, potential pixels that form the lanes are collected together.
 
-Left and Right lane polynomials are found by using `np.polyfit`. These polynomials are used to find the precise lane on the left and right sides respectively.
+Left and Right lane polynomials are found by using `np.polyfit` on the pixels found in the previous step. These polynomials are used to find the precise lane on the left and right sides respectively.
 
-Using the lanes found using the polynomials, the lanes are drawn on the image and reverse persepctive transform is done on the resulting pixel locations to project a path onto the original image.
+The lanes found above are drawn on the image and reverse persepctive transform is done on the resulting pixel locations to project a path onto the original image.
 
 Following image shows the resulting image with a test image.
 
