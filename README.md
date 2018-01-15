@@ -142,4 +142,10 @@ Here's a [link to my video result](./project_video_output.mp4)
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+Significant time was spent on finding the right thresholds on color transformations and gradients. Using the interact` facility from `ipywidgets` was very helpful. It allowed be to play with various combinations and visualize the results immediately. All thresholds are set using this method and tweaked subsequently depending on the video performance.
+
+At several segments of the video, I extraced individual frames and debugged individual issues like bad perspectives, bad lane curves and bad projections. However, I felt I still have a few issues to be resolved especially in lane finding. I noticed the curvature of left and right lanes are a bit off and need to be debugged. Problem could be in the coordinates chosen for perspective transform. I think, depending on the raod curvature, the coordinate smay need to be adjusted dynamically.
+
+`Note:` One area of optimization I intend to do in the 2nd term is to use lane locations from previous farmes where possible. 
+
+The code will most likely fail when the curves are too sharp as the lane finding algirthm is not robust enough and also the performance of the code is not optimal as I am not caching lane locations from previous frames and reusing them until a sanity check forces to reset to re-calculate the lanes. 
